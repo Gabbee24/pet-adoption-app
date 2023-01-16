@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import './searchPet.css';
+import Pet from './Pet';
+import useBreedList from './useBreedList';
 
 const SearchPet = () => {
     const ANIMALS = ['bird', 'cat', 'dog', 'rabbit', 'reptile'];
@@ -8,11 +10,29 @@ const SearchPet = () => {
     const [location, setLocation] = useState("");
     const [animal, setAnimal] = useState("");
     const [breed, setBreed] = useState("");
-    const breeds = [];
+    const [pets, setPets] = useState([]);
+    const [breeds] = useBreedList(animal);
+
+    useEffect(() => {
+        requestPets();
+    },[]);
+
+    async function requestPets() {
+        const res = await fetch(`http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`);
+    
+        const jsonn = await res.json();
+
+        setPets(jsonn.pets)
+    }
 
   return (
     <div className='search-params'>
-        <form className='petForm'>
+        <form 
+            onSubmit={e => {
+                e.preventDefault();
+                requestPets();
+            }}
+            className='petForm'>
             <label htmlFor="location">
                 Location
             </label>
@@ -31,6 +51,7 @@ const SearchPet = () => {
                     id="animal"
                     onChange={e => {
                         setAnimal(e.target.value);
+                        setBreed('');
                     }}
                 >
                     <option />
@@ -45,6 +66,7 @@ const SearchPet = () => {
                 <select 
                     value={breed} 
                     id="breed"
+                    disabled={breeds.length === 0}
                     onChange={e => {
                         setBreed(e.target.value);
                     }}
@@ -56,6 +78,16 @@ const SearchPet = () => {
                 </select>
             <button>Submit</button>
         </form>
+        {
+            pets.map(pet => (
+                <Pet 
+                    key={pet.id}
+                    name = {pet.name}
+                    animal ={pet.animal}
+                    breed ={pet.breed} 
+                />
+            ))
+        }
     </div>
   )
 }

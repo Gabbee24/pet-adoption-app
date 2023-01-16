@@ -1,4 +1,4 @@
-import './App.css';
+
 import SearchPet from './component/SearchPet';
 import Title from './component/Title';
 
