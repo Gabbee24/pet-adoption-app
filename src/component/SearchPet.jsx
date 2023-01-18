@@ -1,45 +1,47 @@
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import './searchPet.css';
 import useBreedList from './useBreedList';
 import Results from './Results';
+import fetchSearch from './fetchSearch';
 
 const SearchPet = () => {
     const ANIMALS = ['bird', 'cat', 'dog', 'rabbit', 'reptile'];
 
-    const [location, setLocation] = useState("");
+    const [requestParams, setRequestParams] = useState({
+        location : '',
+        animal : '',
+        breed : '',
+    });
     const [animal, setAnimal] = useState("");
-    const [breed, setBreed] = useState("");
-    const [pets, setPets] = useState([]);
     const [breeds] = useBreedList(animal);
 
-    useEffect(() => {
-        requestPets();
-    },[]);
-
-    async function requestPets() {
-        const res = await fetch(`http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`);
-    
-        const jsonn = await res.json();
-
-        setPets(jsonn.pets)
-    }
+    const results = useQuery(['search', requestParams], fetchSearch);
+    const pets = results?.data?.pets ?? [];
 
   return (
     <div className='search-params'>
         <form 
             onSubmit={e => {
                 e.preventDefault();
-                requestPets();
+                const formData = new FormData(e.target);
+                const obj = {
+                    animal: formData.get('animal') ?? '',
+                    breed: formData.get('breed') ?? '',
+                    location: formData.get('location') ?? '',
+                };
+                setRequestParams(obj);
             }}
             className='petForm'>
+
+
             <label htmlFor="location">
                 Location
             </label>
                 <input
-                    onChange={e => setLocation(e.target.value)}
+                    name='location'
                     id="location"
-                    value={location}
                     placeholder="Location"
                 />                
             
@@ -51,7 +53,7 @@ const SearchPet = () => {
                     id="animal"
                     onChange={e => {
                         setAnimal(e.target.value);
-                        setBreed('');
+                        // setBreed('');
                     }}
                 >
                     <option />
@@ -64,12 +66,9 @@ const SearchPet = () => {
                 Breed
             </label>
                 <select 
-                    value={breed} 
+                    name='breed'
                     id="breed"
                     disabled={breeds.length === 0}
-                    onChange={e => {
-                        setBreed(e.target.value);
-                    }}
                 >
                     <option />
                     {breeds.map(breed => (
