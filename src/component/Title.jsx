@@ -1,10 +1,18 @@
 import {FcHome} from 'react-icons/fc'
+import { Link } from 'react-router-dom'
 
 const Title = () => {
+
+  const style={
+    listStyleType: 'none',
+    textDecoration: 'none'
+
+  };
+
   return (
-    <div>
+    <Link style={style} to="/">
         <h2 style={{textAlign :'center'}}><FcHome/> Adopt Me</h2>
-    </div>
+    </Link>
   )
 }
 
