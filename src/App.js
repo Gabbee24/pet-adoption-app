@@ -3,6 +3,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import SearchPet from './component/SearchPet';
 import Title from './component/Title';
 import Details from './component/Details';
+import './style.css';
 
 function App() {
 
