@@ -17,6 +17,8 @@ function App() {
   });
 
   return (
+    <div className='container'>
+
     <QueryClientProvider client={queryClient}>
 
       <Title/>
@@ -26,6 +28,7 @@ function App() {
         <Route path='/' element={<SearchPet/>}/>
       </Routes>
     </QueryClientProvider>
+    </div>
   );
 }
 

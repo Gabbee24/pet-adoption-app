@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useBreedList from './useBreedList';
 import Results from './Results';
 import fetchSearch from './fetchSearch';
