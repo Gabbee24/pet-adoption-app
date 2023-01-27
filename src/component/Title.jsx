@@ -11,7 +11,7 @@ const Title = () => {
 
   return (
     <Link style={style} to="/">
-        <h2 style={{textAlign :'center'}}><FcHome/> Adopt Me</h2>
+        <h2 style={{textAlign :'center', color: ' #ad343e'}}><FcHome/> Adopt Me</h2>
     </Link>
   )
 }
