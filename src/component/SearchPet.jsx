@@ -57,7 +57,7 @@ const SearchPet = () => {
             <label htmlFor="animal">
                 Animal
                 <select 
-                    className='mb-5 block w-60'
+                    className='search-input'
                     value={animal} 
                     id="animal"
                     onChange={e => {
@@ -75,7 +75,7 @@ const SearchPet = () => {
             <label htmlFor="breed">
                 Breed
                 <select
-                    className='mb-5 block w-60 disabled:opacity-30' 
+                    className='search-input grayed-out-disabled' 
                     name='breed'
                     id="breed"
                     disabled={breeds.length === 0}

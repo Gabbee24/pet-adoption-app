@@ -30,7 +30,7 @@ class Carousel extends Component {
                             data-index={index}
                             key={photo}
                             src={photo}
-                            className={index === active ? 'activve' : ''}
+                            className={index === active ? 'active' : ''}
                             alt='animal thumbnail'
                         />
                     ))}

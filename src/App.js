@@ -6,6 +6,7 @@ import Title from './component/Title';
 import Details from './component/Details';
 import AdoptedPetContext from './component/AdoptedPetContext';
 import './style.css';
+import './component/searchPet.css'
 
 function App() {
 
