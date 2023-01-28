@@ -1,4 +1,4 @@
-import {FcHome} from 'react-icons/fc'
+import {MdPets} from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
 const Title = () => {
@@ -9,9 +9,15 @@ const Title = () => {
 
   };
 
+  // const style2={
+  //   textAlign: 'center',
+  //   color: '#ad343e'
+
+  // };
+
   return (
-    <Link style={style} to="/">
-        <h2 style={{textAlign :'center', color: ' #ad343e'}}><FcHome/> Adopt Me</h2>
+    <Link className='text-6xl text-white hover:text-gray-200' to="/">
+        <h2 style={{}}><MdPets style={{}} /> Adopt Me</h2>
     </Link>
   )
 }
