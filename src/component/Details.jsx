@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, lazy } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import ErrorBoundary from "./ErrorBoundary";
@@ -6,6 +6,8 @@ import fetchPet from "./fetchPet";
 import AdoptedPetContext from "./AdoptedPetContext";
 import Carousel from "./Carousel";
 import Modal from "./Modal";
+
+// const Modal = lazy(() => import('./Modal') );
 
 const Details = () => {
   const [showModal, setShowModal] = useState(false);
