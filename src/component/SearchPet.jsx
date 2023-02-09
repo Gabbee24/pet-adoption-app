@@ -1,24 +1,30 @@
-import { useState, useContext } from 'react';
-import AdoptedPetContext from './AdoptedPetContext';
+import { useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+// import AdoptedPetContext from './AdoptedPetContext';
 import { useQuery } from '@tanstack/react-query';
 import useBreedList from './useBreedList';
 import Results from './Results';
 import fetchSearch from './fetchSearch';
+import {all} from './reduxSlice/searchParamsSlice';
 
 const SearchPet = () => {
     const ANIMALS = ['bird', 'cat', 'dog', 'rabbit', 'reptile'];
 
-    const [requestParams, setRequestParams] = useState({
-        location : '',
-        animal : '',
-        breed : '',
-    });
     const [animal, setAnimal] = useState("");
     const [breeds] = useBreedList(animal);
-    const [adoptedPet, _] = useContext(AdoptedPetContext)
+    const adoptedPet = useSelector(state  => state.adoptedPet.value);
+    const searchParams = useSelector(state => state.searchParams.value);
+    const dispatch = useDispatch();
 
-    const results = useQuery(['search', requestParams], fetchSearch);
+    const results = useQuery(['search', searchParams], fetchSearch);
     const pets = results?.data?.pets ?? [];
+
+    const style ={
+            display: 'flex',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            marginTop: '8px',
+    }
 
   return (
     <div className='search-params my-0 mx-auto w-11/12'>
@@ -31,13 +37,13 @@ const SearchPet = () => {
                     breed: formData.get('breed') ?? '',
                     location: formData.get('location') ?? '',
                 };
-                setRequestParams(obj);
+                dispatch(all(obj));
             }}
             className='p-10 mb-10 rounded-lg bg-gray-200 shadow-lg justify-center items-center flex-col flex'>
 
                 {
                     adoptedPet ? (
-                        <div className="image-container pet">
+                        <div style={style} className="carousel-smaller image-container pet">
                             <img src={adoptedPet.images[0]} alt={adoptedPet.name} />
                         </div>
                     ) : null

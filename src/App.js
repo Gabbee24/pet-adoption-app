@@ -1,10 +1,12 @@
-import { useState, lazy , Suspense} from 'react';
+import {  lazy , Suspense} from 'react';
 import {Routes, Route} from 'react-router-dom';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import { Provider } from 'react-redux';
+import store from './component/store';
 import Title from './component/Title';
 import SearchPet from './component/SearchPet';
 import Details from './component/Details';
-import AdoptedPetContext from './component/AdoptedPetContext';
+// import AdoptedPetContext from './component/AdoptedPetContext';
 import './style.css';
 import './component/searchPet.css';
 import {FaDog} from 'react-icons/fa'
@@ -24,14 +26,13 @@ function App() {
     },
   });
 
-  const adoptedPet = useState(null);
-
   return (
     <div 
       className='p-0 m-0' 
       style={{background: "url(http://pets-images.dev-apis.com/pets/wallpaperA.jpg)"}}>
 
-    <AdoptedPetContext.Provider value={adoptedPet}>
+    <Provider store={store}>
+
       <QueryClientProvider client={queryClient}>
         <Suspense fallback= {
           <div className='loading-pane'>
@@ -49,7 +50,7 @@ function App() {
           </Routes>
         </Suspense>
       </QueryClientProvider>
-    </AdoptedPetContext.Provider>
+    </Provider>
     </div>
   );
 }
